@@ -7,8 +7,11 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+    "d3": "^4.13.0",
+    "guans-deltamap": "^1.3.28",
     "guans-style": "^1.0.14",
     "react": "^17.0.2",
+    "react-dat-gui": "^4.1.1",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.1"
