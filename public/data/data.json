@@ -56,24 +56,9 @@
       "final": 89
     },
     {
-      "name": "Emily",
-      "midterm": 79,
-      "final": 72
-    },
-    {
-      "name": "Ella",
-      "midterm": 93,
-      "final": 84
-    },
-    {
       "name": "Elizabeth",
       "midterm": 75,
       "final": 79
-    },
-    {
-      "name": "Camila",
-      "midterm": 95,
-      "final": 90
     },
     {
       "name": "Luna",
@@ -84,11 +69,6 @@
       "name": "Sofia",
       "midterm": 62,
       "final": 72
-    },
-    {
-      "name": "Avery",
-      "midterm": 75,
-      "final": 68
     },
     {
       "name": "Mila",
@@ -126,11 +106,6 @@
       "final": 66
     },
     {
-      "name": "Madison",
-      "midterm": 78,
-      "final": 72
-    },
-    {
       "name": "Eleanor",
       "midterm": 62,
       "final": 74
@@ -141,24 +116,9 @@
       "final": 89
     },
     {
-      "name": "Nora",
-      "midterm": 85,
-      "final": 67
-    },
-    {
       "name": "Riley",
       "midterm": 70,
       "final": 78
-    },
-    {
-      "name": "Zoey",
-      "midterm": 87,
-      "final": 71
-    },
-    {
-      "name": "Hannah",
-      "midterm": 77,
-      "final": 60
     },
     {
       "name": "Hazel",
@@ -171,34 +131,156 @@
       "final": 76
     },
     {
-      "name": "Ellie",
-      "midterm": 92,
-      "final": 70
-    },
-    {
-      "name": "Violet",
-      "midterm": 75,
-      "final": 65
-    },
-    {
       "name": "Lillian",
       "midterm": 76,
       "final": 79
-    },
-    {
-      "name": "Zoe",
-      "midterm": 78,
-      "final": 62
     },
     {
       "name": "Stella",
       "midterm": 59,
       "final": 69
     },
+
+
     {
-      "name": "Aurora",
-      "midterm": 84,
+      "name": "Livia",
+      "midterm": 75,
+      "final": 60
+    },
+    {
+      "name": "Emma",
+      "midterm": 79,
+      "final": 72
+    },
+    {
+      "name": "Ava",
+      "midterm": 85,
+      "final": 81
+    },
+    {
+      "name": "Sophia",
+      "midterm": 96,
+      "final": 83
+    },
+    {
+      "name": "Isabella",
+      "midterm": 94,
+      "final": 87
+    },
+    {
+      "name": "Charlotte",
+      "midterm":75,
+      "final": 72
+    },
+    {
+      "name": "Amelia",
+      "midterm": 79,
       "final": 76
+    },
+    {
+      "name": "Mia",
+      "midterm": 92,
+      "final": 91
+    },
+    {
+      "name": "Harper",
+      "midterm": 80,
+      "final": 64
+    },
+    {
+      "name": "Evelyn",
+      "midterm": 79,
+      "final": 72
+    },
+    {
+      "name": "Abigail",
+      "midterm": 89,
+      "final": 65
+    },
+    {
+      "name": "Elizabeth",
+      "midterm":79,
+      "final": 75
+    },
+    {
+      "name": "Luna",
+      "midterm": 84,
+      "final": 81
+    },
+    {
+      "name": "Sofia",
+      "midterm": 72,
+      "final": 62
+    },
+    {
+      "name": "Mila",
+      "midterm": 73,
+      "final": 60
+    },
+    {
+      "name": "Aria",
+      "midterm": 75,
+      "final": 74
+    },
+    {
+      "name": "Scarlett",
+      "midterm": 71,
+      "final": 68
+    },
+    {
+      "name": "Penelope",
+      "midterm": 67,
+      "final": 64
+    },
+    {
+      "name": "Layla",
+      "midterm": 72,
+      "final": 71
+    },
+    {
+      "name": "Chloe",
+      "midterm": 85,
+      "final": 85
+    },
+    {
+      "name": "Victoria",
+      "midterm": 66,
+      "final": 65
+    },
+    {
+      "name": "Eleanor",
+      "midterm": 74,
+      "final": 62
+    },
+    {
+      "name": "Grace",
+      "midterm": 89,
+      "final": 82
+    },
+    {
+      "name": "Riley",
+      "midterm": 78,
+      "final": 70
+    },
+    {
+      "name": "Hazel",
+      "midterm": 90,
+      "final": 83
+    },
+    {
+      "name": "Lily",
+      "midterm": 76,
+      "final": 72
+    },
+    {
+      "name": "Lillian",
+      "midterm": 79,
+      "final": 76
+    },
+    {
+      "name": "Stella",
+      "midterm": 69,
+      "final": 59
     }
   ]
 }

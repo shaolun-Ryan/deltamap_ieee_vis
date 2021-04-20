@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "item": "ryan",
+      "initial": -1.75,
+      "final": -1.0
+    },
+    {
+      "item": "haywa",
+      "initial": -3.5,
+      "final": -2.65
+    },
+    {
+      "item": "ryan",
+      "initial": -1.0,
+      "final": -1.75
+    },
+    {
+      "item": "haywa",
+      "initial": -2.65,
+      "final": -3.5
+    }
+  ]
+}

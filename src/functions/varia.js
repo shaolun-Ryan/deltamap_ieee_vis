@@ -36,8 +36,14 @@ let varia = (arr) =>{
     let [min_rise, max_rise] = getExtent(arr_rise)
     let [min_drop, max_drop] = getExtent(arr_drop)
 
-    dataOrigin.rise.axisnode = d3.range(min_rise, max_rise+1)
-    dataOrigin.drop.axisnode = d3.range(min_drop, max_drop+1)
+    /*计算step，保证每一个值都能生成对应的左边点，而不存在值找不到左边点的情况*/
+    function handle_step(arr){
+       let each_is_int = arr.every(d=>{
+           return d[start]%1==0 && d[end]%1==0
+       })
+        return each_is_int?1:0.05 //TODO: 如果因为所有值里有跃过这两个值的，则修改0.05为更小的值
+    }
+
 
     dataOrigin.rise.link = arr_rise.map((d,i)=>{
         return {
@@ -53,6 +59,9 @@ let varia = (arr) =>{
             end: d[end]
         }
     })
+
+    dataOrigin.rise.axisnode = d3.range(min_rise, max_rise+1, handle_step(dataOrigin.rise.link))
+    dataOrigin.drop.axisnode = d3.range(min_drop, max_drop+1, handle_step(dataOrigin.drop.link))
 
 
     /* **************Begin to build output data******************** */
@@ -148,6 +157,10 @@ let varia = (arr) =>{
 
 
 let getExtent = (arr)=>{
+    if(!arr[0]){
+        return []
+    }
+
     /* 按对象的排布顺序找出name,start和end字段 */
     let [name,start,end] = Object.keys(arr[0])
 
