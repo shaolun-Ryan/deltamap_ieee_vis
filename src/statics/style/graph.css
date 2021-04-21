@@ -52,22 +52,22 @@
     stroke-width: 1px;
 }
 
-.link-drop {
-    stroke-opacity: 0.5;
+.link-rise {
+    stroke-opacity: 0.4;
     stroke-width: 1px;
     stroke-linecap: round;
     transition: all 0.3s ease;
 }
 
 .link-drop {
-    stroke-opacity: 0.5;
+    stroke-opacity: 0.4;
     stroke-width: 1px;
     stroke-linecap: round;
     transition: all 0.3s ease;
 }
 
 .link-d-rise {
-    stroke-width: 1px;
+    stroke-width: 2px;
     /* transition: all 0.3s ease; */
     stroke-linecap: round;
 
@@ -77,4 +77,20 @@
     stroke-width: 2px;
     /* transition: all 0.3s ease; */
     stroke-linecap: round;
+}
+
+#tooltip {
+    max-width: 100px;
+    position: absolute;
+    padding: 10px;
+    color: #fff;
+    font: 0.8em Arial;
+    background: #272c36;
+    border: 10px;
+    border-radius: 8px;
+    pointer-events: none;
+    text-align: left;
+    line-height: 1.5em;
+    font-weight: bold;
+    z-index:999;
 }

@@ -7,6 +7,7 @@ import $ from 'jquery'
 import '../statics/style/graph.css'
 
 
+
 /*
 * Graph组件用来render deltamap
 * 其中格式化函数是guans-deltamap函数中的varia()函数进行格式化的
@@ -16,6 +17,7 @@ import '../statics/style/graph.css'
 *   内外圆半径: 全局搜索R, r
 *   双圆坐标：x0，y0
 * */
+
 
 /*
 * BUG:
@@ -38,8 +40,8 @@ class Graph extends Component {
             innerAxis_drop: 100,
 
             /*TODO: 更改初始residue-items的个数以计算inner axis的大小*/
-            filter_num_rise: 0,
-            filter_num_drop: 0,
+            filter_num_rise: 10,
+            filter_num_drop: 10,
 
             /*下面是一些杂项，为了避免跨组件引用要重新写的麻烦*/
             scale_rise: function () {
@@ -53,10 +55,14 @@ class Graph extends Component {
         this.draw_graph = this.draw_graph.bind(this)
         this.handle_GUI_update = this.handle_GUI_update.bind(this)
         this.draw_graph$_draw_semi = this.draw_graph$_draw_semi.bind(this)
-        this.handle$_filter_num_rise = this.handle$_filter_num_rise.bind(this)
-        this.handle$_filter_num_drop = this.handle$_filter_num_drop.bind(this)
-        this.handle$_controller_rise = this.handle$_controller_rise.bind(this)
-        this.handle$_controller_drop = this.handle$_controller_drop.bind(this)
+        this.handle_filter_num_rise = this.handle_filter_num_rise.bind(this)
+        this.handle_filter_num_drop = this.handle_filter_num_drop.bind(this)
+        this.handle_controller_rise = this.handle_controller_rise.bind(this)
+        this.handle_controller_drop = this.handle_controller_drop.bind(this)
+
+        /*交互函数*/
+        this.draw_graph$_tooltip = this.draw_graph$_tooltip.bind(this)
+        this.mouseout = this.mouseout.bind(this)
 
     }
 
@@ -150,8 +156,9 @@ class Graph extends Component {
             }
         })
 
+
         /*判断是否要更改varia里面的步距*/
-        if(!ang2){
+        if (!ang2 && ang2 !== 0) {
             throw 'Check if the axisnode and item values corresponded'
         }
 
@@ -203,6 +210,7 @@ class Graph extends Component {
 
             return false
         }
+
 
         if (boolean$_clear_all(trend)) {
             svg.selectAll(`.${trend}`)
@@ -260,7 +268,6 @@ class Graph extends Component {
             .attr('d', radialLine)
 
 
-
         //绘制半圆上inner坐标上的刻度
         let tick_inner = svg.append("g");
 
@@ -308,8 +315,8 @@ class Graph extends Component {
 
         xOuterTick.append("text")
             .attr("transform", function (d) {
-                /*TODO: 问题出在scale*/
-                var angle = scale(d) + Math.PI / 2;
+                /*FIXME: 问题出在scale*/
+                var angle = scale_rise(d) + Math.PI / 2;
                 return (angle < Math.PI) ? "rotate(90)translate(0,-14)" : "rotate(-90)translate(0, 18)";
             })
             .text(function (d) {
@@ -318,7 +325,6 @@ class Graph extends Component {
             .style("font-size", 12)
             .style('font-weight', 500)
 
-        /*TODO: 加入交互的div，源代码：Deltamap/libs/vis_examples.js/312:*/
 
         //绘制axis之间的link
         let dataForRadialLine = data.link.map((d, i) => {
@@ -338,6 +344,7 @@ class Graph extends Component {
             }]
         })
 
+
         let links = svg.append('g')
             .selectAll('.link')
             .data(dataForRadialLine)
@@ -348,6 +355,9 @@ class Graph extends Component {
             .attr('stroke', d => {
                 return trend === 'rise' ? '#6ab04c' : '#eb4d4b'
             })
+            .on('mouseover', mouseover)
+            .on('mouseout', this.mouseout)
+
 
         if (!d3.select('clip' + `-${trend}`).empty()) {
             d3.select('clip' + `-${trend}`).remove()
@@ -363,7 +373,6 @@ class Graph extends Component {
             .attr('r', innerRadius)
 
 
-
         let links_d = svg.append('g')
             .attr('clip-path', `url(#clip-${trend})`)
             .selectAll('.link-d')
@@ -375,7 +384,8 @@ class Graph extends Component {
             .attr('stroke', d => {
                 return trend === 'rise' ? '#6ab04c' : '#eb4d4b'
             })
-
+            .on('mouseover', mouseover)
+            .on('mouseout', this.mouseout)
 
 
         //画outer环形坐标的圆
@@ -412,7 +422,17 @@ class Graph extends Component {
             .attr('stroke-width', '1px')
             .attr('stroke-dasharray', '6,3')
 
-        /*明天debug drop部分的图*/
+
+
+        /*mouseover_filtrate交互*/
+        function mouseover(d,i){
+            let event = window.event
+            let div = d3.select('#tooltip')
+                .style('opacity', 0.95);
+            div.html(`Item: ${d[0].name}</br>Initial: ${d[0].from}</br>Final: ${d[0].to}</br>Change: ${d[0].delta}`)
+                .style("top", (event.offsetY) + "px")
+                .style('left', (event.offsetX) + "px")
+        }
 
 
     }
@@ -428,7 +448,7 @@ class Graph extends Component {
             .attr('height', height)
 
 
-        axios.get('data/2_close_change.json')
+        axios.get('data/data.json')
             /*加载数据*/
             .then(d => {
                 return d.data.data //取到data，传给下一个.then()
@@ -446,11 +466,13 @@ class Graph extends Component {
                 //画rise或者drop的半圆
                 this.draw_graph$_draw_semi(svg, data, 'rise')
                 this.draw_graph$_draw_semi(svg, data, 'drop')
+                this.draw_graph$_tooltip()
 
             })
 
 
     }
+
 
     handle_GUI_update(newData) {
 
@@ -468,7 +490,8 @@ class Graph extends Component {
 
     }
 
-    handle$_filter_num_rise(event) {
+
+    handle_filter_num_rise(event) {
         let _this = this
 
         /*判断有没有rise部分*/
@@ -494,7 +517,7 @@ class Graph extends Component {
     }
 
 
-    handle$_filter_num_drop(event) {
+    handle_filter_num_drop(event) {
         let _this = this
 
         /*判断有没有rise部分*/
@@ -520,7 +543,7 @@ class Graph extends Component {
     }
 
 
-    handle$_controller_rise() {
+    handle_controller_rise() {
         let _this = this
         let data = this.state.viewData.rise
         let trend = 'rise'
@@ -650,7 +673,7 @@ class Graph extends Component {
     }
 
 
-    handle$_controller_drop() {
+    handle_controller_drop() {
         let _this = this
         let data = this.state.viewData.drop
         let x0 = $('#graph').height() / 2
@@ -778,15 +801,29 @@ class Graph extends Component {
 
     }
 
-
-    var_func_pump() {
-
+    draw_graph$_tooltip(){
+        //定义tooltip的selection
+        let div = d3.select('.graph_container')
+            .append('div')
+            .attr('id', 'tooltip')
+            .style('opacity', 0);
     }
+    
+    
+
+
+    /*mouseout_filtrate交互*/
+    mouseout(d,i){
+        d3.select('#tooltip')
+            .style("opacity", 0);
+    }
+
 
 
     componentDidMount() {
         this.draw_graph()
     }
+
 
     render() {
         //设置GUI的默认值
@@ -811,7 +848,7 @@ class Graph extends Component {
                                    value={this.state.innerAxis_drop}
                                    id="controller_drop"
                                    step={5}
-                                   onChange={this.handle$_controller_drop}/>
+                                   onChange={this.handle_controller_drop}/>
                         </div>
 
 
@@ -819,7 +856,7 @@ class Graph extends Component {
                             <label className="control-label">drop num</label>
                             <input type="text" className="form-control"
                                    value={this.state.filter_num_drop}
-                                   onChange={this.handle$_filter_num_drop}
+                                   onChange={this.handle_filter_num_drop}
                             />
                         </div>
 
@@ -837,7 +874,7 @@ class Graph extends Component {
                                    value={this.state.innerAxis_rise}
                                    id="controller_rise"
                                    step={5}
-                                   onChange={this.handle$_controller_rise}/>
+                                   onChange={this.handle_controller_rise}/>
                         </div>
 
 
@@ -845,7 +882,7 @@ class Graph extends Component {
                             <label className="control-label">rise num</label>
                             <input type="text" className="form-control"
                                    value={this.state.filter_num_rise}
-                                   onChange={this.handle$_filter_num_rise}
+                                   onChange={this.handle_filter_num_rise}
                             />
                         </div>
 
@@ -860,5 +897,6 @@ class Graph extends Component {
         )
     }
 }
+
 
 export default Graph;
